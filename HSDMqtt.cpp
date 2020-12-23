@@ -86,9 +86,12 @@ bool HSDMqtt::reconnect()
 {
   bool retval = false;
   
-  // Create a random client ID
-  String clientId = "ESP8266Client-";
-  clientId += String(random(0xffff), HEX);
+  // Create a constant but unique client ID
+  String clientId = m_config.getHost();
+  clientId += "-";
+  String mac = WiFi.macAddress();
+  mac.replace(":", "");
+  clientId += mac.substring(6);
 
   Serial.print(F("Connecting to MQTT broker "));
   Serial.print(String(m_config.getMqttServer()));

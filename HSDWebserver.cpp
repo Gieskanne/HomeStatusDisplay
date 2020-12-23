@@ -206,6 +206,8 @@ void HSDWebserver::deliverStatusPage()
     html += WiFi.SSID();
     html += F("</b><br/>IP address is <b>");
     html += m_html.ip2String(WiFi.localIP());
+    html += F("</b><br/>MAC address is <b>");
+    html += WiFi.macAddress();
     html += F("</b><br/><p>");
   }
   else
