@@ -10,6 +10,8 @@
 #define JSON_KEY_WIFI_SSID             (F("wifiSSID"))
 #define JSON_KEY_WIFI_PSK              (F("wifiPSK"))
 #define JSON_KEY_MQTT_SERVER           (F("mqttServer"))
+#define JSON_KEY_MQTT_USER             (F("mqttUser"))
+#define JSON_KEY_MQTT_PASSWORD         (F("mqttPassword"))
 #define JSON_KEY_MQTT_STATUS_TOPIC     (F("mqttStatusTopic"))
 #define JSON_KEY_MQTT_TEST_TOPIC       (F("mqttTestTopic"))
 #define JSON_KEY_MQTT_WILL_TOPIC       (F("mqttWillTopic"))
@@ -148,6 +150,12 @@ public:
   const char* getMqttServer() const;
   bool setMqttServer(const char* ip);
 
+  const char* getMqttUser() const;
+  bool setMqttUser(const char* user);
+
+  const char* getMqttPassword() const;
+  bool setMqttPassword(const char* pwd);
+
   const char* getMqttStatusTopic() const;
   bool setMqttStatusTopic(const char* topic);
 
@@ -236,6 +244,8 @@ private:
   static const int MAX_WIFI_SSID_LEN         = 30;
   static const int MAX_WIFI_PSK_LEN          = 30;
   static const int MAX_MQTT_SERVER_LEN       = 20;
+  static const int MAX_MQTT_USER_LEN         = 20;
+  static const int MAX_MQTT_PASSWORD_LEN     = 50;
   static const int MAX_MQTT_STATUS_TOPIC_LEN = 50;
   static const int MAX_MQTT_TEST_TOPIC_LEN   = 50;
   static const int MAX_MQTT_WILL_TOPIC_LEN   = 50;
@@ -256,6 +266,8 @@ private:
   char m_cfgWifiSSID[MAX_WIFI_SSID_LEN + 1];
   char m_cfgWifiPSK[MAX_WIFI_PSK_LEN + 1];
   char m_cfgMqttServer[MAX_MQTT_SERVER_LEN + 1];
+  char m_cfgMqttUser[MAX_MQTT_USER_LEN + 1];
+  char m_cfgMqttPassword[MAX_MQTT_PASSWORD_LEN + 1];
   char m_cfgMqttStatusTopic[MAX_MQTT_STATUS_TOPIC_LEN + 1];
   char m_cfgMqttTestTopic[MAX_MQTT_TEST_TOPIC_LEN + 1];
   char m_cfgMqttWillTopic[MAX_MQTT_WILL_TOPIC_LEN + 1];

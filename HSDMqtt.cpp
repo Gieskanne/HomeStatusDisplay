@@ -97,13 +97,27 @@ bool HSDMqtt::reconnect()
   const char* willTopic = m_config.getMqttWillTopic();
   bool connected = false;
   
-  if(isTopicValid(willTopic))
+  if (strlen(m_config.getMqttUser()) == 0)
   {
-    connected = m_pubSubClient.connect(clientId.c_str(), willTopic, 0, true, "off");
+    if(isTopicValid(willTopic))
+    {
+      connected = m_pubSubClient.connect(clientId.c_str(), willTopic, 0, true, "off");
+    }
+    else
+    {
+      connected = m_pubSubClient.connect(clientId.c_str());
+    }
   }
   else
   {
-    connected = m_pubSubClient.connect(clientId.c_str());
+    if(isTopicValid(willTopic))
+    {
+      connected = m_pubSubClient.connect(clientId.c_str(), m_config.getMqttUser(), m_config.getMqttPassword(), willTopic, 0, true, "off");
+    }
+    else
+    {
+      connected = m_pubSubClient.connect(clientId.c_str(), m_config.getMqttUser(), m_config.getMqttPassword());
+    }
   }
   
   if(connected) 
@@ -179,4 +193,3 @@ bool HSDMqtt::isTopicValid(const char* topic)
 {
   return (strlen(topic) > 0);
 }
-

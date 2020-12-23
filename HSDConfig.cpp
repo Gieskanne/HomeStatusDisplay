@@ -63,6 +63,8 @@ void HSDConfig::resetMainConfigData()
   setWifiPSK("");
 
   setMqttServer("");
+  setMqttUser("");
+  setMqttPassword("");
   setMqttStatusTopic("");
   setMqttTestTopic("");  
   setMqttWillTopic(""); 
@@ -114,7 +116,8 @@ bool HSDConfig::readMainConfigFile()
       Serial.println(F(""));
 
       if(json.containsKey(JSON_KEY_HOST) && json.containsKey(JSON_KEY_WIFI_SSID) && json.containsKey(JSON_KEY_WIFI_PSK) && 
-         json.containsKey(JSON_KEY_MQTT_SERVER) && json.containsKey(JSON_KEY_MQTT_STATUS_TOPIC) && json.containsKey(JSON_KEY_MQTT_TEST_TOPIC) && 
+         json.containsKey(JSON_KEY_MQTT_SERVER) && json.containsKey(JSON_KEY_MQTT_USER) && json.containsKey(JSON_KEY_MQTT_PASSWORD) && 
+         json.containsKey(JSON_KEY_MQTT_STATUS_TOPIC) && json.containsKey(JSON_KEY_MQTT_TEST_TOPIC) && 
          json.containsKey(JSON_KEY_MQTT_WILL_TOPIC) && json.containsKey(JSON_KEY_LED_COUNT) && json.containsKey(JSON_KEY_LED_PIN) && 
          json.containsKey(JSON_KEY_CLOCK_PIN_CLK) && json.containsKey(JSON_KEY_CLOCK_PIN_DIO) && json.containsKey(JSON_KEY_CLOCK_BRIGHTNESS) &&
          json.containsKey(JSON_KEY_CLOCK_TIME_ZONE) && json.containsKey(JSON_KEY_CLOCK_NTP_SERVER) && json.containsKey(JSON_KEY_CLOCK_NTP_INTERVAL))
@@ -125,6 +128,8 @@ bool HSDConfig::readMainConfigFile()
         setWifiSSID(json[JSON_KEY_WIFI_SSID]);
         setWifiPSK(json[JSON_KEY_WIFI_PSK]);
         setMqttServer(json[JSON_KEY_MQTT_SERVER]);
+        setMqttUser(json[JSON_KEY_MQTT_USER]);
+        setMqttPassword(json[JSON_KEY_MQTT_PASSWORD]);
         setMqttStatusTopic(json[JSON_KEY_MQTT_STATUS_TOPIC]);
         setMqttTestTopic(json[JSON_KEY_MQTT_TEST_TOPIC]);
         setMqttWillTopic(json[JSON_KEY_MQTT_WILL_TOPIC]);
@@ -162,6 +167,8 @@ void HSDConfig::printMainConfigFile(JsonObject& json)
   Serial.print  (F("  • wifiSSID        : ")); Serial.println((const char*)(json[JSON_KEY_WIFI_SSID]));
   Serial.println(F("  • wifiPSK         : not shown"));
   Serial.print  (F("  • mqttServer      : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_SERVER]));
+  Serial.print  (F("  • mqttUser        : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_USER]));
+  Serial.print  (F("  • mqttPassword    : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_PASSWORD]));
   Serial.print  (F("  • mqttStatusTopic : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_STATUS_TOPIC]));
   Serial.print  (F("  • mqttTestTopic   : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_TEST_TOPIC]));
   Serial.print  (F("  • mqttWillTopic   : ")); Serial.println((const char*)(json[JSON_KEY_MQTT_WILL_TOPIC]));
@@ -301,6 +308,8 @@ void HSDConfig::writeMainConfigFile()
   json[JSON_KEY_WIFI_SSID] = m_cfgWifiSSID;
   json[JSON_KEY_WIFI_PSK] = m_cfgWifiPSK;
   json[JSON_KEY_MQTT_SERVER] = m_cfgMqttServer;
+  json[JSON_KEY_MQTT_USER] = m_cfgMqttUser;
+  json[JSON_KEY_MQTT_PASSWORD] = m_cfgMqttPassword;
   json[JSON_KEY_MQTT_STATUS_TOPIC] = m_cfgMqttStatusTopic;
   json[JSON_KEY_MQTT_TEST_TOPIC] = m_cfgMqttTestTopic;
   json[JSON_KEY_MQTT_WILL_TOPIC] = m_cfgMqttWillTopic;
@@ -586,6 +595,30 @@ bool HSDConfig::setMqttServer(const char* ip)
 {
   strncpy(m_cfgMqttServer, ip, MAX_MQTT_SERVER_LEN);
   m_cfgMqttServer[MAX_MQTT_SERVER_LEN] = '\0';
+  return true;
+}
+
+const char* HSDConfig::getMqttUser() const 
+{
+  return m_cfgMqttUser;
+}
+
+bool HSDConfig::setMqttUser(const char* user) 
+{
+  strncpy(m_cfgMqttUser, user, MAX_MQTT_USER_LEN);
+  m_cfgMqttUser[MAX_MQTT_USER_LEN] = '\0';
+  return true;
+}
+
+const char* HSDConfig::getMqttPassword() const 
+{
+  return m_cfgMqttPassword;
+}
+
+bool HSDConfig::setMqttPassword(const char* pwd) 
+{
+  strncpy(m_cfgMqttPassword, pwd, MAX_MQTT_PASSWORD_LEN);
+  m_cfgMqttPassword[MAX_MQTT_PASSWORD_LEN] = '\0';
   return true;
 }
 

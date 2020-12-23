@@ -81,8 +81,13 @@ void HSDWebserver::deliverRootPage()
   "  <td>Server</td>");
   html += F("  <td><input type='text' name='mqttServer' value='");
   html += String(m_config.getMqttServer());
-  html += F("' size='30' maxlength='40' placeholder='IP or hostname'></td></tr><tr><td>Status topic</td>");
-  
+  html += F("' size='30' maxlength='40' placeholder='IP or hostname'></td></tr><tr><td>User</td>");
+  html += F("  <td><input type='text' name='mqttUser' value='");
+  html += String(m_config.getMqttUser());
+  html += F("' size='30' maxlength='20' placeholder='User name'></td></tr><tr><td>Password</td>");
+  html += F("  <td><input type='password' name='mqttPassword' value='");
+  html += String(m_config.getMqttPassword());
+  html += F("' size='30' maxlength='50' placeholder='Password'></td></tr><tr><td>Status topic</td>");  
   html += F("  <td><input type='text' name='mqttStatusTopic' value='");
   html += String(m_config.getMqttStatusTopic());
   html += F("' size='30' maxlength='40' placeholder='#'></td>"
@@ -587,6 +592,16 @@ bool HSDWebserver::updateMainConfig()
   if (m_server.hasArg(JSON_KEY_MQTT_SERVER))
   {
     needSave |= m_config.setMqttServer(m_server.arg(JSON_KEY_MQTT_SERVER).c_str());
+  }
+  
+  if (m_server.hasArg(JSON_KEY_MQTT_USER))
+  {
+    needSave |= m_config.setMqttUser(m_server.arg(JSON_KEY_MQTT_USER).c_str());
+  }
+
+  if (m_server.hasArg(JSON_KEY_MQTT_PASSWORD))
+  {
+    needSave |= m_config.setMqttPassword(m_server.arg(JSON_KEY_MQTT_PASSWORD).c_str());
   }
   
   if (m_server.hasArg(JSON_KEY_MQTT_STATUS_TOPIC))
